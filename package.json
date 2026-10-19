@@ -1,0 +1,26 @@
+{
+  "name": "my-bookmark-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "migrate": "pnpm --filter web exec prisma migrate dev",
+    "generate": "pnpm --filter web exec prisma generate",
+    "validate": "pnpm --filter web exec prisma validate",
+    "studio": "pnpm --filter web exec prisma studio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.10.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.10.1",
+  "type": "module"
+}

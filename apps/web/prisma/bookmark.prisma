@@ -1,0 +1,17 @@
+model Bookmark {
+    id          Int      @id @default(autoincrement())
+    title       String
+    url         String
+    category    String
+    description String   @default("Belum ada deskripsi.")
+    icon        String   @default("🔗")
+    favorite    Boolean  @default(false)
+    archived    Boolean  @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    userId Int?
+    user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("bookmarks")
+}

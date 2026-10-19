@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ========================================
+   LINKNEST: WARM RETRO DESKTOP
+   ======================================== */
+
+:root {
+  color-scheme: light;
+
+  --background: #f3ebdd;
+  --foreground: #332f28;
+  --surface: #fffaf1;
+  --surface-muted: #e9dfce;
+  --border: #c9bba4;
+  --muted-foreground: #766d60;
+  --accent: #78866b;
+  --accent-foreground: #ffffff;
+
+  --retro-espresso: #332f28;
+  --retro-cream: #f3ebdd;
+  --retro-olive: #78866b;
+  --retro-terracotta: #b96f52;
+  --retro-mustard: #c6a45b;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #292820;
+  --foreground: #f3ebdd;
+  --surface: #37352d;
+  --surface-muted: #454338;
+  --border: #625b4b;
+  --muted-foreground: #c0b6a4;
+  --accent: #a5b18f;
+  --accent-foreground: #292820;
+
+  --retro-espresso: #292820;
+  --retro-cream: #f3ebdd;
+  --retro-olive: #a5b18f;
+  --retro-terracotta: #d58b6b;
+  --retro-mustard: #dfbf76;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+/* ========================================
+   RETRO-MODERN TOAST: SONNER
+   ======================================== */
+
+[data-sonner-toaster] {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+[data-sonner-toast].linknest-toast {
+  background: var(--surface) !important;
+  color: var(--foreground) !important;
+  border: 2px solid var(--border) !important;
+  border-radius: 10px !important;
+  box-shadow: 4px 4px 0 rgb(51 47 40 / 12%) !important;
+  padding: 14px 16px !important;
+}
+
+:root[data-theme="dark"] [data-sonner-toast].linknest-toast {
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 20%) !important;
+}
+
+/* Judul dan deskripsi toast */
+
+[data-sonner-toast].linknest-toast [data-title] {
+  color: var(--foreground) !important;
+  font-weight: 700;
+}
+
+[data-sonner-toast].linknest-toast [data-description] {
+  color: var(--muted-foreground) !important;
+}
+
+/* Aksen warna sesuai jenis notifikasi */
+
+[data-sonner-toast].linknest-toast[data-type="success"] {
+  border-color: var(--retro-olive) !important;
+}
+
+[data-sonner-toast].linknest-toast[data-type="success"] [data-icon] {
+  color: var(--retro-olive) !important;
+}
+
+[data-sonner-toast].linknest-toast[data-type="error"] {
+  border-color: var(--retro-terracotta) !important;
+}
+
+[data-sonner-toast].linknest-toast[data-type="error"] [data-icon] {
+  color: var(--retro-terracotta) !important;
+}
+
+[data-sonner-toast].linknest-toast[data-type="info"] {
+  border-color: var(--retro-mustard) !important;
+}
+
+[data-sonner-toast].linknest-toast[data-type="info"] [data-icon] {
+  color: var(--retro-mustard) !important;
+}
+
+[data-sonner-toast].linknest-toast [data-close-button] {
+  background: var(--surface-muted) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+/* ========================================
+   LINKNEST: RETRO NEO-BRUTALISM
+   ======================================== */
+
+:root {
+  --retro-outline: #332f28;
+  --retro-shadow: 4px 4px 0 #332f28;
+  --retro-shadow-hover: 6px 6px 0 #332f28;
+  --retro-shadow-pressed: 1px 1px 0 #332f28;
+}
+
+:root[data-theme="dark"] {
+  --retro-outline: #171711;
+  --retro-shadow: 4px 4px 0 #171711;
+  --retro-shadow-hover: 6px 6px 0 #171711;
+  --retro-shadow-pressed: 1px 1px 0 #171711;
+}
+
+/* Kartu bookmark */
+
+/* Kartu: sedikit terangkat saat disentuh */
+.retro-card {
+  border: 2px solid var(--retro-outline) !important;
+  border-radius: 8px !important;
+  box-shadow: 4px 4px 0 var(--retro-outline);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.retro-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--retro-outline);
+}
+
+/* Tombol: hover lebih jelas, klik terasa mantap */
+.retro-button {
+  border: 2px solid var(--retro-outline) !important;
+  border-radius: 6px !important;
+  box-shadow: 3px 3px 0 var(--retro-outline);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 150ms ease,
+    filter 150ms ease;
+}
+
+.retro-button:hover {
+  filter: brightness(1.06);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--retro-outline);
+}
+
+.retro-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--retro-outline);
+}
+
+/* Tombol ikon: punya respons saat hover */
+.retro-icon-button {
+  border: 1.5px solid transparent;
+  border-radius: 5px !important;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 120ms ease;
+}
+
+.retro-icon-button:hover {
+  border-color: var(--retro-outline);
+  background-color: var(--surface-muted);
+  transform: translateY(-2px);
+}
+
+.retro-icon-button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retro-card,
+  .retro-button,
+  .retro-icon-button {
+    transition: none;
+  }
+}
+
+/* Label kategori */
+.retro-label {
+  border: 1.5px solid var(--retro-outline);
+  border-radius: 4px !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Dialog konfirmasi */
+.retro-dialog {
+  border: 2px solid var(--retro-outline) !important;
+  border-radius: 8px !important;
+  box-shadow: 8px 8px 0 var(--retro-outline);
+}
+
+/* Toast */
+[data-sonner-toast].linknest-toast {
+  border-width: 2px !important;
+  border-radius: 6px !important;
+  box-shadow: var(--retro-shadow) !important;
+}
+
+/* Aksesibilitas: keyboard */
+.retro-button:focus-visible,
+.retro-icon-button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retro-card,
+  .retro-button,
+  .retro-icon-button {
+    transition: none;
+  }
+}
+
+/* Input formulir retro */
+.retro-input {
+  border-color: var(--retro-outline);
+  box-shadow: 2px 2px 0 var(--retro-outline);
+  transition:
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.retro-input:focus {
+  box-shadow: 3px 3px 0 var(--retro-outline);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.retro-input::placeholder {
+  color: var(--muted-foreground);
+}
