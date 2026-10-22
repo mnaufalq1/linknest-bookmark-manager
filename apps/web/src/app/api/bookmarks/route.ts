@@ -1,19 +1,100 @@
-
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import {
+  validateCreateBookmarkInput,
+  validateUpdateBookmarkInput,
+  validateBookmarkId,
+} from "@/lib/validators";
 
-export async function GET() {
+// Fungsi helper untuk mengambil sesi user dari request
+// Mengembalikan userId atau response error 401 jika belum login
+async function ambilUserId(
+  request?: Request,
+): Promise<{ userId: string } | { error: NextResponse }> {
   try {
+    let reqHeaders: Headers;
+    if (request?.headers) {
+      reqHeaders = request.headers;
+    } else {
+      reqHeaders = await headers();
+    }
+
+    const session = await auth.api.getSession({
+      headers: reqHeaders,
+    });
+
+    if (!session?.user?.id) {
+      return {
+        error: NextResponse.json(
+          { success: false, message: "Kamu harus login terlebih dahulu." },
+          { status: 401 },
+        ),
+      };
+    }
+
+    return { userId: session.user.id };
+  } catch (err) {
+    console.error("Gagal memeriksa sesi user:", err);
+    return {
+      error: NextResponse.json(
+        { success: false, message: "Kamu harus login terlebih dahulu." },
+        { status: 401 },
+      ),
+    };
+  }
+}
+
+// Helper untuk membaca body JSON dengan aman
+async function bacaJsonBody(
+  request: Request,
+): Promise<{ data: Record<string, unknown> } | { error: NextResponse }> {
+  try {
+    const body = await request.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return {
+        error: NextResponse.json(
+          { success: false, message: "Format data JSON tidak valid." },
+          { status: 400 },
+        ),
+      };
+    }
+    return { data: body as Record<string, unknown> };
+  } catch {
+    return {
+      error: NextResponse.json(
+        { success: false, message: "Format data JSON tidak valid." },
+        { status: 400 },
+      ),
+    };
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const hasil = await ambilUserId(request);
+
+    if ("error" in hasil) return hasil.error;
+
     const bookmarks = await prisma.bookmark.findMany({
+      where: { userId: hasil.userId },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return NextResponse.json({
-      success: true,
-      data: bookmarks,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: bookmarks,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate",
+        },
+      },
+    );
   } catch (error) {
     console.error("Gagal mengambil bookmark:", error);
 
@@ -27,61 +108,43 @@ export async function GET() {
   }
 }
 
-
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const hasil = await ambilUserId(request);
 
-    const title =
-      typeof body.title === "string" ? body.title.trim() : "";
-    const url =
-      typeof body.url === "string" ? body.url.trim() : "";
-    const category =
-      typeof body.category === "string" ? body.category.trim() : "";
-    const description =
-      typeof body.description === "string"
-        ? body.description.trim()
-        : "";
-    const icon =
-      typeof body.icon === "string" ? body.icon : "🔗";
+    if ("error" in hasil) return hasil.error;
 
-    if (!title || !url || !category) {
+    const parsedBody = await bacaJsonBody(request);
+    if ("error" in parsedBody) return parsedBody.error;
+
+    const validation = validateCreateBookmarkInput(parsedBody.data);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { success: false, message: "Judul, URL, dan kategori wajib diisi." },
+        { success: false, message: validation.error },
         { status: 400 },
       );
     }
 
-    let parsedUrl: URL;
+    const { title, url, category, description, icon } = validation.data;
 
-    try {
-      parsedUrl = new URL(url);
-    } catch {
-      return NextResponse.json(
-        { success: false, message: "Format URL tidak valid." },
-        { status: 400 },
-      );
-    }
-
-    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      return NextResponse.json(
-        { success: false, message: "URL harus menggunakan HTTP atau HTTPS." },
-        { status: 400 },
-      );
-    }
-
+    // Simpan bookmark dengan userId dari sesi yang sedang aktif
     const bookmark = await prisma.bookmark.create({
       data: {
         title,
-        url: parsedUrl.toString(),
+        url,
         category,
-        description: description || "Belum ada deskripsi.",
+        description,
         icon,
+        userId: hasil.userId,
       },
     });
 
     return NextResponse.json(
-      { success: true, data: bookmark },
+      {
+        success: true,
+        message: "Bookmark berhasil disimpan.",
+        data: bookmark,
+      },
       { status: 201 },
     );
   } catch (error) {
@@ -94,105 +157,56 @@ export async function POST(request: Request) {
   }
 }
 
-
 export async function PATCH(request: Request) {
   try {
-    const body = await request.json();
+    const hasil = await ambilUserId(request);
 
-    const id = Number(body.id);
+    if ("error" in hasil) return hasil.error;
 
-    if (!Number.isInteger(id) || id <= 0) {
+    const parsedBody = await bacaJsonBody(request);
+    if ("error" in parsedBody) return parsedBody.error;
+
+    const idValidation = validateBookmarkId(parsedBody.data.id);
+    if (!idValidation.isValid) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "ID bookmark tidak valid.",
-        },
+        { success: false, message: idValidation.error },
         { status: 400 },
       );
     }
 
-    const data: {
-      title?: string;
-      url?: string;
-      category?: string;
-      description?: string;
-      favorite?: boolean;
-      archived?: boolean;
-    } = {};
+    const id = idValidation.data;
 
-    if (typeof body.title === "string") {
-      const cleanTitle = body.title.trim();
-      if (!cleanTitle) {
-        return NextResponse.json(
-          { success: false, message: "Judul tidak boleh kosong." },
-          { status: 400 },
-        );
-      }
-      data.title = cleanTitle;
-    }
+    // Pastikan bookmark milik user yang sedang login
+    const existingBookmark = await prisma.bookmark.findFirst({
+      where: { id, userId: hasil.userId },
+    });
 
-    if (typeof body.url === "string") {
-      const cleanUrl = body.url.trim();
-      let parsedUrl: URL;
-      try {
-        parsedUrl = new URL(cleanUrl);
-      } catch {
-        return NextResponse.json(
-          { success: false, message: "Format URL tidak valid." },
-          { status: 400 },
-        );
-      }
-
-      if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-        return NextResponse.json(
-          { success: false, message: "URL harus menggunakan HTTP atau HTTPS." },
-          { status: 400 },
-        );
-      }
-
-      data.url = parsedUrl.toString();
-    }
-
-    if (typeof body.category === "string") {
-      const cleanCategory = body.category.trim();
-      if (!cleanCategory) {
-        return NextResponse.json(
-          { success: false, message: "Kategori tidak boleh kosong." },
-          { status: 400 },
-        );
-      }
-      data.category = cleanCategory;
-    }
-
-    if (typeof body.description === "string") {
-      data.description = body.description.trim() || "Belum ada deskripsi.";
-    }
-
-    if (typeof body.favorite === "boolean") {
-      data.favorite = body.favorite;
-    }
-
-    if (typeof body.archived === "boolean") {
-      data.archived = body.archived;
-    }
-
-    if (Object.keys(data).length === 0) {
+    if (!existingBookmark) {
       return NextResponse.json(
         {
           success: false,
-          message: "Tidak ada perubahan yang valid.",
+          message: "Bookmark tidak ditemukan atau kamu tidak memiliki akses.",
         },
+        { status: 404 },
+      );
+    }
+
+    const updateValidation = validateUpdateBookmarkInput(parsedBody.data);
+    if (!updateValidation.isValid) {
+      return NextResponse.json(
+        { success: false, message: updateValidation.error },
         { status: 400 },
       );
     }
 
     const bookmark = await prisma.bookmark.update({
       where: { id },
-      data,
+      data: updateValidation.data,
     });
 
     return NextResponse.json({
       success: true,
+      message: "Bookmark berhasil diperbarui.",
       data: bookmark,
     });
   } catch (error) {
@@ -223,19 +237,37 @@ export async function PATCH(request: Request) {
   }
 }
 
-
 export async function DELETE(request: Request) {
   try {
-    const body = await request.json();
-    const id = Number(body.id);
+    const hasil = await ambilUserId(request);
 
-    if (!Number.isInteger(id) || id <= 0) {
+    if ("error" in hasil) return hasil.error;
+
+    const parsedBody = await bacaJsonBody(request);
+    if ("error" in parsedBody) return parsedBody.error;
+
+    const idValidation = validateBookmarkId(parsedBody.data.id);
+    if (!idValidation.isValid) {
+      return NextResponse.json(
+        { success: false, message: idValidation.error },
+        { status: 400 },
+      );
+    }
+
+    const id = idValidation.data;
+
+    // Pastikan bookmark milik user yang sedang login
+    const existingBookmark = await prisma.bookmark.findFirst({
+      where: { id, userId: hasil.userId },
+    });
+
+    if (!existingBookmark) {
       return NextResponse.json(
         {
           success: false,
-          message: "ID bookmark tidak valid.",
+          message: "Bookmark tidak ditemukan atau kamu tidak memiliki akses.",
         },
-        { status: 400 },
+        { status: 404 },
       );
     }
 

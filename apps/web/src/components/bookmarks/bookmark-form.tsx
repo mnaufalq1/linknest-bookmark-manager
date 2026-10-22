@@ -43,8 +43,24 @@ export function BookmarkForm({
         setDescription("");
       }
       setError("");
+
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      function handleKeyDown(event: KeyboardEvent) {
+        if (event.key === "Escape") {
+          onClose();
+        }
+      }
+
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
-  }, [open, editBookmark, categories]);
+  }, [open, editBookmark, categories, onClose]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

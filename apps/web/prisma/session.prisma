@@ -1,0 +1,18 @@
+// Model Session untuk menyimpan sesi login user
+// Dikelola otomatis oleh Better Auth
+
+model Session {
+    id        String   @id @default(cuid())
+    expiresAt DateTime
+    token     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    ipAddress String?
+    userAgent String?
+
+    // Relasi ke User
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("session")
+}

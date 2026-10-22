@@ -1,0 +1,14 @@
+// Model Verification untuk menyimpan token verifikasi
+// Digunakan untuk verifikasi email, reset password, dll.
+// Dikelola otomatis oleh Better Auth
+
+model Verification {
+    id         String    @id @default(cuid())
+    identifier String
+    value      String
+    expiresAt  DateTime
+    createdAt  DateTime? @default(now())
+    updatedAt  DateTime? @updatedAt
+
+    @@map("verification")
+}

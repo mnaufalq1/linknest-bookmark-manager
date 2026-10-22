@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { HeartOff, Heart, FolderOpen, X, ExternalLink, Link2, AlertTriangle, Pen } from "lucide-react";
+import { AppDialog } from "../ui/app-dialog";
 
 type Bookmark = {
   id: number;
@@ -28,11 +29,11 @@ export function BookmarkCard({
   onDelete,
   onEdit,
 }: BookmarkCardProps) {
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [appDialogOpen, setAppDialogOpen] = useState(false);
 
   function handleConfirmDelete() {
     onDelete(bookmark.id);
-    setIsDeleteDialogOpen(false);
+    setAppDialogOpen(false);
   }
 
   function handleCardClick(event: React.MouseEvent) {
@@ -112,7 +113,7 @@ export function BookmarkCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setIsDeleteDialogOpen(true);
+                setAppDialogOpen(true);
               }}
               title="Hapus bookmark"
               aria-label="Hapus bookmark"
@@ -190,89 +191,62 @@ export function BookmarkCard({
         </p>
       </article>
 
-      {isDeleteDialogOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              setIsDeleteDialogOpen(false);
-            }
-          }}
-        >
-          <section
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby={`delete-title-${bookmark.id}`}
-            aria-describedby={`delete-description-${bookmark.id}`}
-            className="retro-dialog w-full max-w-md p-5"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-              color: "var(--foreground)",
-            }}
-          >
-            <div className="mb-4 flex items-start gap-3">
-              <div
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border-2 text-xl"
-                style={{
-                  backgroundColor: "#B96F5220",
-                  borderColor: "#B96F52",
-                  color: "#B96F52",
-                }}
-              >
-                <AlertTriangle size={24} strokeWidth={2.5}/>
-              </div>
 
-              <div className="min-w-0 flex-1">
-                <h2
-                  id={`delete-title-${bookmark.id}`}
-                  className="text-lg font-bold"
-                >
-                  Hapus bookmark?
-                </h2>
+<AppDialog
+  open={appDialogOpen}
+  onClose={() => setAppDialogOpen(false)}
+  title="Hapus bookmark?"
+  role="alertdialog"
+  icon={
+    <div
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border-2 text-xl"
+      style={{
+        backgroundColor: "#B96F5220",
+        borderColor: "#B96F52",
+        color: "#B96F52",
+      }}
+    >
+      <AlertTriangle size={24} strokeWidth={2.5} />
+    </div>
+  }
+  description={
+    <>
+      Kamu akan menghapus{" "}
+      <strong
+        className="break-words"
+        style={{ color: "var(--foreground)" }}
+      >
+        {bookmark.title}
+      </strong>
+      . Tindakan ini tidak bisa dibatalkan.
+    </>
+  }
+  footer={
+    <>
+      <button
+        type="button"
+        onClick={() => setAppDialogOpen(false)}
+        className="retro-button px-4 py-2.5 text-sm font-semibold"
+        style={{ borderColor: "var(--border)" }}
+      >
+        Batal
+      </button>
 
-                <p
-                  id={`delete-description-${bookmark.id}`}
-                  className="mt-2 text-sm leading-6"
-                  style={{ color: "var(--muted-foreground)" }}
-                >
-                  Kamu akan menghapus{" "}
-                  <strong
-                    className="break-words"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {bookmark.title}
-                  </strong>
-                  . Tindakan ini tidak bisa dibatalkan.
-                </p>
-              </div>
-            </div>
+      <button
+        type="button"
+        onClick={handleConfirmDelete}
+        className="retro-button px-4 py-2.5 text-sm font-bold text-white"
+        style={{
+          backgroundColor: "#B96F52",
+          borderColor: "#332F28",
+        }}
+      >
+        Hapus bookmark
+      </button>
+    </>
+  }
+/>
 
-            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                onClick={() => setIsDeleteDialogOpen(false)}
-                className="retro-button px-4 py-2.5 text-sm font-semibold"
-                style={{ borderColor: "var(--border)" }}
-              >
-                Batal
-              </button>
-
-              <button
-                type="button"
-                onClick={handleConfirmDelete}
-                className="retro-button px-4 py-2.5 text-sm font-bold text-white"
-                style={{
-                  backgroundColor: "#B96F52",
-                  borderColor: "#332F28",
-                }}
-              >
-                Hapus bookmark
-              </button>
-            </div>
-          </section>
-        </div>
-      )}
     </>
   );
 }
