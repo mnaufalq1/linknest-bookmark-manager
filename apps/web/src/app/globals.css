@@ -253,8 +253,24 @@ body {
 }
 
 /* Input formulir retro */
+
+/* Input formulir retro */
 .retro-input {
-  border-color: var(--retro-outline);
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px;
+
+  border: 2px solid var(--retro-outline);
+  border-radius: 5px;
+  background-color: var(--surface);
+  color: var(--foreground);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
   box-shadow: 2px 2px 0 var(--retro-outline);
   transition:
     box-shadow 150ms ease,
@@ -262,11 +278,38 @@ body {
 }
 
 .retro-input:focus {
-  box-shadow: 3px 3px 0 var(--retro-outline);
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+  box-shadow: 3px 3px 0 var(--retro-outline);
 }
 
 .retro-input::placeholder {
   color: var(--muted-foreground);
+  opacity: 1;
+}
+
+.retro-label {
+  display: block;
+  width: fit-content;
+  margin-bottom: 8px;
+  padding: 3px 7px;
+
+  border: 1.5px solid var(--retro-outline);
+  border-radius: 4px;
+  color: var(--foreground);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+.retro-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.retro-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }

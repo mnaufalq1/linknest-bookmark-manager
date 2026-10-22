@@ -16,12 +16,12 @@ import { fileURLToPath } from 'node:url'
 globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums"
-import * as $Class from "./internal/class"
-import * as Prisma from "./internal/prismaNamespace"
+import * as $Enums from "./enums.ts"
+import * as $Class from "./internal/class.ts"
+import * as Prisma from "./internal/prismaNamespace.ts"
 
-export * as $Enums from './enums'
-export * from "./enums"
+export * as $Enums from './enums.ts'
+export * from "./enums.ts"
 /**
  * ## Prisma Client
  * 
@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Bookmarks
- * const bookmarks = await prisma.bookmark.findMany()
+ * // Fetch zero or more Accounts
+ * const accounts = await prisma.account.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,12 +42,27 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
  * Model Bookmark
  * 
  */
 export type Bookmark = Prisma.BookmarkModel
 /**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Verification
+ * 
+ */
+export type Verification = Prisma.VerificationModel

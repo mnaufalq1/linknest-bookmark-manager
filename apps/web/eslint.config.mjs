@@ -13,6 +13,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      "react-hooks/set-state-in-effect": "warn",
+      "@next/next/no-location-assign-relative-destination": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

@@ -8,8 +8,12 @@
     "build": "pnpm --filter web build",
     "migrate": "pnpm --filter web exec prisma migrate dev",
     "generate": "pnpm --filter web exec prisma generate",
+    "migrate:deploy": "pnpm --filter web exec prisma migrate deploy",
     "validate": "pnpm --filter web exec prisma validate",
-    "studio": "pnpm --filter web exec prisma studio"
+    "studio": "pnpm --filter web exec prisma studio",
+    "reset": "pnpm --filter web exec prisma migrate reset",
+    "typecheck": "pnpm --filter web typecheck",
+    "test": "pnpm --filter web test"
   },
   "keywords": [],
   "author": "",

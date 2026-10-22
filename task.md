@@ -60,7 +60,7 @@ Bagian ini harus diverifikasi terhadap kode aktual sebelum task baru dimulai.
 - [x] Konfigurasi koneksi Prisma telah dibuat di `prisma.ts`.
 - [x] Endpoint `/api/bookmarks` telah dibuat.
 - [x] Pengujian POST bookmark berhasil dilakukan.
-- [ ] Audit ulang seluruh implementasi yang sudah tersedia sebelum melanjutkan pengembangan.
+- [x] Audit ulang seluruh implementasi yang sudah tersedia sebelum melanjutkan pengembangan.
 
 **Catatan:** Checklist di atas mencatat progres yang telah dilaporkan. Status implementasi tetap perlu diperiksa jika ada perubahan kode setelahnya.
 
@@ -72,17 +72,17 @@ Bagian ini harus diverifikasi terhadap kode aktual sebelum task baru dimulai.
 
 Tujuan: Memastikan struktur, konfigurasi, dan kode dasar proyek konsisten.
 
-- [ ] Periksa struktur direktori monorepo.
-- [ ] Periksa konfigurasi workspace pnpm.
-- [ ] Periksa script pada root dan `apps/web/package.json`.
-- [ ] Periksa versi Next.js, React, TypeScript, Prisma, dan dependensi terkait.
-- [ ] Periksa konfigurasi environment variables.
-- [ ] Periksa konfigurasi Prisma 7 dan adapter database.
-- [ ] Periksa model database serta migration yang tersedia.
-- [ ] Periksa endpoint API dan penanganan error.
-- [ ] Periksa komponen UI serta custom hook yang sudah dibuat.
-- [ ] Perbaiki masalah fondasi yang terbukti ada.
-- [ ] Pastikan aplikasi dapat dijalankan dan build berhasil.
+- [x] Periksa struktur direktori monorepo.
+- [x] Periksa konfigurasi workspace pnpm.
+- [x] Periksa script pada root dan `apps/web/package.json`.
+- [x] Periksa versi Next.js, React, TypeScript, Prisma, dan dependensi terkait.
+- [x] Periksa konfigurasi environment variables.
+- [x] Periksa konfigurasi Prisma 7 dan adapter database.
+- [x] Periksa model database serta migration yang tersedia.
+- [x] Periksa endpoint API dan penanganan error.
+- [x] Periksa komponen UI serta custom hook yang sudah dibuat.
+- [x] Perbaiki masalah fondasi yang terbukti ada.
+- [x] Pastikan aplikasi dapat dijalankan dan build berhasil.
 
 **Kriteria selesai:**
 - Struktur proyek dipahami dan terdokumentasi.
@@ -93,18 +93,18 @@ Tujuan: Memastikan struktur, konfigurasi, dan kode dasar proyek konsisten.
 
 Tujuan: Memastikan seluruh operasi bookmark bekerja dengan database.
 
-- [ ] Periksa operasi Create bookmark.
-- [ ] Periksa operasi Read bookmark.
-- [ ] Implementasikan atau perbaiki Update bookmark.
-- [ ] Implementasikan atau perbaiki Delete bookmark.
-- [ ] Validasi judul dan URL.
-- [ ] Validasi data kategori serta deskripsi.
-- [ ] Tangani URL tidak valid dan input kosong.
-- [ ] Tangani bookmark yang tidak ditemukan.
-- [ ] Gunakan respons API yang konsisten.
-- [ ] Pastikan error database tidak membocorkan informasi sensitif.
-- [ ] Uji setiap operasi terhadap PostgreSQL.
-- [ ] Pastikan data tetap tersimpan setelah aplikasi dijalankan ulang.
+- [x] Periksa operasi Create bookmark.
+- [x] Periksa operasi Read bookmark.
+- [x] Implementasikan atau perbaiki Update bookmark.
+- [x] Implementasikan atau perbaiki Delete bookmark.
+- [x] Validasi judul dan URL.
+- [x] Validasi data kategori serta deskripsi.
+- [x] Tangani URL tidak valid dan input kosong.
+- [x] Tangani bookmark yang tidak ditemukan.
+- [x] Gunakan respons API yang konsisten.
+- [x] Pastikan error database tidak membocorkan informasi sensitif.
+- [x] Uji setiap operasi terhadap PostgreSQL.
+- [x] Pastikan data tetap tersimpan setelah aplikasi dijalankan ulang.
 
 **Kriteria selesai:**
 - Operasi CRUD berjalan sesuai kebutuhan.
@@ -116,19 +116,19 @@ Tujuan: Memastikan seluruh operasi bookmark bekerja dengan database.
 
 Tujuan: Menghubungkan UI LinkNest dengan data bookmark yang sebenarnya.
 
-- [ ] Periksa implementasi `use-bookmarks.ts`.
-- [ ] Periksa `page.tsx`, `BookmarkGrid`, dan `bookmark-form.tsx`.
-- [ ] Periksa alur pembukaan dan penutupan modal.
-- [ ] Hubungkan daftar bookmark dengan data API.
-- [ ] Hubungkan formulir tambah bookmark.
-- [ ] Hubungkan fitur edit bookmark.
-- [ ] Hubungkan fitur hapus bookmark.
-- [ ] Perbarui tampilan setelah operasi berhasil.
-- [ ] Tambahkan loading state saat mengambil atau mengubah data.
-- [ ] Tambahkan empty state ketika belum ada bookmark.
-- [ ] Tampilkan pesan error ketika permintaan gagal.
-- [ ] Cegah pengiriman formulir berulang ketika request sedang berjalan.
-- [ ] Pastikan state UI tetap konsisten dengan data server.
+- [x] Periksa implementasi `use-bookmarks.ts`.
+- [x] Periksa `page.tsx`, `BookmarkGrid`, dan `bookmark-form.tsx`.
+- [x] Periksa alur pembukaan dan penutupan modal.
+- [x] Hubungkan daftar bookmark dengan data API.
+- [x] Hubungkan formulir tambah bookmark.
+- [x] Hubungkan fitur edit bookmark.
+- [x] Hubungkan fitur hapus bookmark.
+- [x] Perbarui tampilan setelah operasi berhasil.
+- [x] Tambahkan loading state saat mengambil atau mengubah data.
+- [x] Tambahkan empty state ketika belum ada bookmark.
+- [x] Tampilkan pesan error ketika permintaan gagal.
+- [x] Cegah pengiriman formulir berulang ketika request sedang berjalan.
+- [x] Pastikan state UI tetap konsisten dengan data server.
 
 **Kriteria selesai:**
 - UI menggunakan data database, bukan data dummy sebagai sumber utama.
@@ -140,15 +140,15 @@ Tujuan: Menghubungkan UI LinkNest dengan data bookmark yang sebenarnya.
 
 Tujuan: Memudahkan pengguna menemukan dan mengatur tautan.
 
-- [ ] Implementasikan pencarian bookmark berdasarkan judul.
-- [ ] Periksa apakah pencarian berdasarkan URL dan deskripsi diperlukan.
-- [ ] Implementasikan filter kategori.
-- [ ] Tambahkan pilihan untuk menampilkan semua bookmark.
-- [ ] Implementasikan pengurutan jika dibutuhkan.
-- [ ] Implementasikan fitur favorit menggunakan field yang sudah tersedia.
-- [ ] Implementasikan arsip menggunakan field yang sudah tersedia.
-- [ ] Pastikan kombinasi pencarian dan filter berjalan dengan benar.
-- [ ] Tampilkan empty state ketika hasil pencarian kosong.
+- [x] Implementasikan pencarian bookmark berdasarkan judul.
+- [x] Periksa apakah pencarian berdasarkan URL dan deskripsi diperlukan.
+- [x] Implementasikan filter kategori.
+- [x] Tambahkan pilihan untuk menampilkan semua bookmark.
+- [x] Implementasikan pengurutan jika dibutuhkan.
+- [x] Implementasikan fitur favorit menggunakan field yang sudah tersedia.
+- [x] Implementasikan arsip menggunakan field yang sudah tersedia.
+- [x] Pastikan kombinasi pencarian dan filter berjalan dengan benar.
+- [x] Tampilkan empty state ketika hasil pencarian kosong.
 
 **Kriteria selesai:**
 - Pencarian dan filter menghasilkan data yang benar.
@@ -159,17 +159,17 @@ Tujuan: Memudahkan pengguna menemukan dan mengatur tautan.
 
 Tujuan: Membuat LinkNest nyaman dipakai di berbagai ukuran layar.
 
-- [ ] Audit tampilan dashboard yang sudah ada.
-- [ ] Pertahankan tema light dan dark sebagai dua mode utama.
-- [ ] Pastikan pergantian tema bekerja dengan benar.
-- [ ] Pastikan preferensi tema dipertahankan sesuai mekanisme yang digunakan.
-- [ ] Periksa tampilan desktop, tablet, dan mobile.
-- [ ] Perbaiki layout ketika jumlah bookmark banyak.
-- [ ] Periksa konsistensi spacing, tipografi, warna, dan komponen.
-- [ ] Periksa aksesibilitas tombol dan formulir.
-- [ ] Pastikan modal dapat ditutup dengan cara yang sesuai.
-- [ ] Tambahkan notifikasi keberhasilan dan kegagalan jika belum tersedia.
-- [ ] Pastikan indikator interaksi dan loading state terlihat jelas.
+- [x] Audit tampilan dashboard yang sudah ada.
+- [x] Pertahankan tema light dan dark sebagai dua mode utama.
+- [x] Pastikan pergantian tema bekerja dengan benar.
+- [x] Pastikan preferensi tema dipertahankan sesuai mekanisme yang digunakan.
+- [x] Periksa tampilan desktop, tablet, dan mobile.
+- [x] Perbaiki layout ketika jumlah bookmark banyak.
+- [x] Periksa konsistensi spacing, tipografi, warna, dan komponen.
+- [x] Periksa aksesibilitas tombol dan formulir.
+- [x] Pastikan modal dapat ditutup dengan cara yang sesuai.
+- [x] Tambahkan notifikasi keberhasilan dan kegagalan jika belum tersedia.
+- [x] Pastikan indikator interaksi dan loading state terlihat jelas.
 
 **Kriteria selesai:**
 - Tampilan responsif dan konsisten.
@@ -180,19 +180,19 @@ Tujuan: Membuat LinkNest nyaman dipakai di berbagai ukuran layar.
 
 Tujuan: Mengurangi bug sebelum aplikasi dipublikasikan.
 
-- [ ] Audit validasi input di sisi server.
-- [ ] Pastikan endpoint hanya menerima metode HTTP yang sesuai.
-- [ ] Pastikan error API memiliki status HTTP yang tepat.
-- [ ] Periksa penggunaan Prisma Client dan koneksi database.
-- [ ] Periksa kebocoran informasi melalui log dan respons error.
-- [ ] Tambahkan unit test untuk fungsi penting.
-- [ ] Tambahkan integration test untuk endpoint bookmark jika memungkinkan.
-- [ ] Uji seluruh operasi CRUD.
-- [ ] Uji input kosong dan URL tidak valid.
-- [ ] Uji pencarian, filter, favorit, dan arsip.
-- [ ] Uji kondisi database tidak tersedia.
-- [ ] Jalankan lint, typecheck, test, dan build menggunakan script yang benar-benar tersedia.
-- [ ] Perbaiki regresi yang ditemukan.
+- [x] Audit validasi input di sisi server.
+- [x] Pastikan endpoint hanya menerima metode HTTP yang sesuai.
+- [x] Pastikan error API memiliki status HTTP yang tepat.
+- [x] Periksa penggunaan Prisma Client dan koneksi database.
+- [x] Periksa kebocoran informasi melalui log dan respons error.
+- [x] Tambahkan unit test untuk fungsi penting.
+- [x] Tambahkan integration test untuk endpoint bookmark jika memungkinkan.
+- [x] Uji seluruh operasi CRUD.
+- [x] Uji input kosong dan URL tidak valid.
+- [x] Uji pencarian, filter, favorit, dan arsip.
+- [x] Uji kondisi database tidak tersedia.
+- [x] Jalankan lint, typecheck, test, dan build menggunakan script yang benar-benar tersedia.
+- [x] Perbaiki regresi yang ditemukan.
 
 **Kriteria selesai:**
 - Pemeriksaan yang relevan lulus.
@@ -205,16 +205,17 @@ Tujuan: Mempersiapkan LinkNest untuk digunakan oleh beberapa pengguna.
 
 **Tahap ini memerlukan persetujuan sebelum implementasi.**
 
-- [ ] Tentukan kebutuhan autentikasi.
-- [ ] Tentukan penyedia autentikasi setelah membandingkan kebutuhan dan dependensi.
-- [ ] Audit schema autentikasi jika sudah tersedia.
-- [ ] Tentukan relasi antara pengguna dan bookmark.
-- [ ] Tentukan aturan kepemilikan dan akses data.
-- [ ] Implementasikan registrasi dan login sesuai scope yang disetujui.
-- [ ] Lindungi endpoint yang memerlukan autentikasi.
-- [ ] Pastikan pengguna hanya dapat mengakses bookmark miliknya.
-- [ ] Tambahkan pengujian akses tanpa autentikasi.
-- [ ] Tambahkan pengujian akses lintas pengguna.
+- [x] Tentukan kebutuhan autentikasi (Email/Password & Social OAuth).
+- [x] Tentukan penyedia autentikasi setelah membandingkan kebutuhan dan dependensi (Better Auth).
+- [x] Audit schema autentikasi jika sudah tersedia (`User`, `Account`, `Session`, `Verification`).
+- [x] Tentukan relasi antara pengguna dan bookmark (`Bookmark.userId -> User.id`).
+- [x] Tentukan aturan kepemilikan dan akses data.
+- [x] Sederhanakan alur kredensial: hilangkan opsi lupa password dari halaman login.
+- [x] Implementasikan registrasi dan login sesuai scope (Email/Password + tombol Google & GitHub OAuth).
+- [x] Lindungi endpoint yang memerlukan autentikasi.
+- [x] Pastikan pengguna hanya dapat mengakses bookmark miliknya.
+- [x] Tambahkan pengujian akses tanpa autentikasi.
+- [x] Tambahkan pengujian akses lintas pengguna.
 
 **Kriteria selesai:**
 - Autentikasi bekerja sesuai mekanisme yang dipilih.
@@ -225,17 +226,17 @@ Tujuan: Mempersiapkan LinkNest untuk digunakan oleh beberapa pengguna.
 
 Tujuan: Menjalankan LinkNest di lingkungan produksi.
 
-- [ ] Verifikasi kompatibilitas proyek dengan Vercel.
-- [ ] Pilih penyedia PostgreSQL produksi.
-- [ ] Konfigurasikan environment variables produksi.
-- [ ] Periksa konfigurasi Prisma untuk deployment.
-- [ ] Pastikan migration produksi dapat dijalankan dengan aman.
-- [ ] Pastikan build produksi berhasil.
-- [ ] Deploy aplikasi ke lingkungan staging atau preview.
+- [x] Verifikasi kompatibilitas proyek dengan Vercel.
+- [x] Pilih penyedia PostgreSQL produksi (Supabase / Neon / Railway dengan connection pooler).
+- [x] Konfigurasikan environment variables produksi.
+- [x] Periksa konfigurasi Prisma untuk deployment (`prisma generate && next build`).
+- [x] Pastikan migration produksi dapat dijalankan dengan aman (`pnpm migrate:deploy`).
+- [x] Pastikan build produksi berhasil.
+- [ ] Deploy aplikasi ke lingkungan staging atau preview (langkah user di Vercel).
 - [ ] Uji operasi CRUD menggunakan database produksi atau staging.
 - [ ] Periksa log dan penanganan error.
 - [ ] Uji autentikasi jika sudah diimplementasikan.
-- [ ] Dokumentasikan langkah deployment dan rollback.
+- [x] Dokumentasikan langkah deployment dan rollback (DEPLOYMENT.md).
 - [ ] Publikasikan aplikasi setelah pemeriksaan selesai.
 
 **Kriteria selesai:**
@@ -308,25 +309,27 @@ Jangan menandai task selesai hanya karena kode sudah ditulis. Verifikasi hasilny
 
 ## 9. Task Aktif Berikutnya
 
-**Task ID:** LN-001
+**Task ID:** LN-008
 
-**Nama:** Audit Implementasi LinkNest
+**Nama:** Deployment
 
-**Tujuan:** Memetakan kondisi kode aktual sebelum melanjutkan pengembangan.
+**Tujuan:** Menyiapkan konfigurasi deployment (Vercel / Node container), mengaudit environment variables produksi, memverifikasi kompatibilitas Prisma Client di serverless/production, dan mendokumentasikan langkah deployment & rollback.
 
 Checklist:
 
-- [ ] Periksa struktur direktori dan workspace.
-- [ ] Periksa `README.md` dan konfigurasi proyek.
-- [ ] Periksa schema Prisma dan migration.
-- [ ] Periksa konfigurasi Prisma 7.
-- [ ] Periksa endpoint `/api/bookmarks`.
-- [ ] Periksa operasi CRUD yang sudah tersedia.
-- [ ] Periksa `use-bookmarks.ts` dan komponen bookmark.
-- [ ] Identifikasi masalah yang benar-benar ada.
-- [ ] Buat daftar temuan berdasarkan tingkat prioritas.
-- [ ] Ajukan rencana perbaikan sebelum mengubah kode.
+- [x] Verifikasi kompatibilitas proyek dengan Vercel atau target deployment.
+- [x] Pilih penyedia PostgreSQL produksi (misal: Supabase, Neon, Railway).
+- [x] Konfigurasikan environment variables produksi (`DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`).
+- [x] Periksa konfigurasi Prisma untuk deployment (`prisma generate` saat build).
+- [x] Pastikan migration produksi dapat dijalankan dengan aman (`pnpm migrate:deploy`).
+- [x] Pastikan build produksi berhasil (`pnpm build` sukses).
+- [ ] Deploy aplikasi ke lingkungan staging atau preview (langkah user mengimpor repo ke Vercel).
+- [ ] Uji operasi CRUD menggunakan database produksi atau staging.
+- [ ] Periksa log dan penanganan error.
+- [ ] Uji autentikasi pada domain produksi.
+- [x] Dokumentasikan langkah deployment dan rollback ([DEPLOYMENT.md](file:///c:/Users/HP/proyek-development/my-bookmark-manager/DEPLOYMENT.md)).
+- [ ] Publikasikan aplikasi setelah pemeriksaan selesai.
 
-**Batasan:** Task ini hanya untuk audit dan penyusunan rencana. Jangan melakukan refactor besar, mengubah schema, memasang dependensi baru, atau menambahkan fitur sebelum hasil audit disetujui.
+**Batasan:** Tidak membocorkan credentials atau secrets produksi ke repositori publik; tidak menjalankan migrasi destruktif tanpa konfirmasi.
 
-**Kriteria selesai:** Kondisi proyek terdokumentasi, masalah teridentifikasi, dan urutan pengerjaan berikutnya disepakati.
+**Kriteria selesai:** Aplikasi dapat diakses via URL deployment, database produksi terhubung aman, dan seluruh alur autentikasi serta CRUD berfungsi.

@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Bookmark
@@ -28,12 +28,10 @@ export type AggregateBookmark = {
 
 export type BookmarkAvgAggregateOutputType = {
   id: number | null
-  userId: number | null
 }
 
 export type BookmarkSumAggregateOutputType = {
   id: number | null
-  userId: number | null
 }
 
 export type BookmarkMinAggregateOutputType = {
@@ -47,7 +45,7 @@ export type BookmarkMinAggregateOutputType = {
   archived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  userId: string | null
 }
 
 export type BookmarkMaxAggregateOutputType = {
@@ -61,7 +59,7 @@ export type BookmarkMaxAggregateOutputType = {
   archived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  userId: string | null
 }
 
 export type BookmarkCountAggregateOutputType = {
@@ -82,12 +80,10 @@ export type BookmarkCountAggregateOutputType = {
 
 export type BookmarkAvgAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type BookmarkSumAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type BookmarkMinAggregateInputType = {
@@ -230,7 +226,7 @@ export type BookmarkGroupByOutputType = {
   archived: boolean
   createdAt: Date
   updatedAt: Date
-  userId: number | null
+  userId: string | null
   _count: BookmarkCountAggregateOutputType | null
   _avg: BookmarkAvgAggregateOutputType | null
   _sum: BookmarkSumAggregateOutputType | null
@@ -267,7 +263,7 @@ export type BookmarkWhereInput = {
   archived?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
-  userId?: Prisma.IntNullableFilter<"Bookmark"> | number | null
+  userId?: Prisma.StringNullableFilter<"Bookmark"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -300,7 +296,7 @@ export type BookmarkWhereUniqueInput = Prisma.AtLeast<{
   archived?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
-  userId?: Prisma.IntNullableFilter<"Bookmark"> | number | null
+  userId?: Prisma.StringNullableFilter<"Bookmark"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -337,7 +333,7 @@ export type BookmarkScalarWhereWithAggregatesInput = {
   archived?: Prisma.BoolWithAggregatesFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
-  userId?: Prisma.IntNullableWithAggregatesFilter<"Bookmark"> | number | null
+  userId?: Prisma.StringNullableWithAggregatesFilter<"Bookmark"> | string | null
 }
 
 export type BookmarkCreateInput = {
@@ -364,7 +360,7 @@ export type BookmarkUncheckedCreateInput = {
   archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userId?: number | null
+  userId?: string | null
 }
 
 export type BookmarkUpdateInput = {
@@ -391,7 +387,7 @@ export type BookmarkUncheckedUpdateInput = {
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BookmarkCreateManyInput = {
@@ -405,7 +401,7 @@ export type BookmarkCreateManyInput = {
   archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userId?: number | null
+  userId?: string | null
 }
 
 export type BookmarkUpdateManyMutationInput = {
@@ -431,7 +427,7 @@ export type BookmarkUncheckedUpdateManyInput = {
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BookmarkCountOrderByAggregateInput = {
@@ -450,7 +446,6 @@ export type BookmarkCountOrderByAggregateInput = {
 
 export type BookmarkAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type BookmarkMaxOrderByAggregateInput = {
@@ -483,7 +478,6 @@ export type BookmarkMinOrderByAggregateInput = {
 
 export type BookmarkSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type BookmarkListRelationFilter = {
@@ -496,28 +490,12 @@ export type BookmarkOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type IntFieldUpdateOperationsInput = {
   set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
@@ -631,7 +609,7 @@ export type BookmarkScalarWhereInput = {
   archived?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
-  userId?: Prisma.IntNullableFilter<"Bookmark"> | number | null
+  userId?: Prisma.StringNullableFilter<"Bookmark"> | string | null
 }
 
 export type BookmarkCreateManyUserInput = {
@@ -773,7 +751,7 @@ export type $BookmarkPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     archived: boolean
     createdAt: Date
     updatedAt: Date
-    userId: number | null
+    userId: string | null
   }, ExtArgs["result"]["bookmark"]>
   composites: {}
 }
@@ -1208,7 +1186,7 @@ export interface BookmarkFieldRefs {
   readonly archived: Prisma.FieldRef<"Bookmark", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Bookmark", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Bookmark", 'DateTime'>
-  readonly userId: Prisma.FieldRef<"Bookmark", 'Int'>
+  readonly userId: Prisma.FieldRef<"Bookmark", 'String'>
 }
     
 

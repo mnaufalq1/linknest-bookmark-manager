@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { Bookmark } from "../components/bookmarks/bookmark-card";
 
@@ -20,49 +20,82 @@ export const categories = [
   "Entertainment",
 ];
 
-export function useBookmarks() {
+export type SortOption = "terbaru" | "terlama" | "a-z" | "z-a";
+
+export function useBookmarks(userId?: string) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeNav, setActiveNav] = useState("Semua Bookmark");
   const [activeCategory, setActiveCategory] = useState("Semua");
+  const [sortBy, setSortBy] = useState<SortOption>("terbaru");
   const [archivedIds, setArchivedIds] = useState<number[]>([]);
 
-  // Mengambil bookmark dari database ketika hook pertama kali digunakan.
-  useEffect(() => {
-    async function loadBookmarks() {
-      try {
-        const response = await fetch("/api/bookmarks");
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-          throw new Error(result.message || "Gagal mengambil bookmark.");
-        }
-
-        const data = result.data as BookmarkFromApi[];
-
-        setBookmarks(data);
-        setArchivedIds(
-          data
-            .filter((bookmark) => bookmark.archived)
-            .map((bookmark) => bookmark.id),
-        );
-      } catch (error) {
-        console.error("Gagal memuat bookmark:", error);
-        toast.error("Gagal memuat bookmark", {
-          description: "Periksa koneksi database, lalu coba muat ulang.",
-        });
-      }
+  const loadBookmarks = useCallback(async () => {
+    if (!userId) {
+      setBookmarks([]);
+      setArchivedIds([]);
+      setIsLoading(false);
+      return;
     }
 
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/bookmarks", {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Gagal mengambil bookmark.");
+      }
+
+      const data = result.data as BookmarkFromApi[];
+      setBookmarks(data);
+      setArchivedIds(
+        data
+          .filter((bookmark) => bookmark.archived)
+          .map((bookmark) => bookmark.id),
+      );
+    } catch (error) {
+      console.error("Gagal memuat bookmark:", error);
+      toast.error("Gagal memuat bookmark", {
+        description: "Periksa koneksi database, lalu coba muat ulang.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [userId]);
+
+  // Mengambil bookmark dari database ketika user login atau berganti akun
+  useEffect(() => {
     loadBookmarks();
-  }, []);
+  }, [loadBookmarks]);
+
+  const allCategories = useMemo(() => {
+    const set = new Set(categories);
+    bookmarks.forEach((b) => {
+      if (b.category && b.category.trim()) {
+        set.add(b.category.trim());
+      }
+    });
+    return Array.from(set);
+  }, [bookmarks]);
 
   const visibleBookmarks = useMemo(() => {
-    return bookmarks.filter((bookmark) => {
+    const searchLower = search.trim().toLowerCase();
+
+    const filtered = bookmarks.filter((bookmark) => {
       const matchesSearch =
-        bookmark.title.toLowerCase().includes(search.toLowerCase()) ||
-        bookmark.url.toLowerCase().includes(search.toLowerCase()) ||
-        bookmark.category.toLowerCase().includes(search.toLowerCase());
+        !searchLower ||
+        bookmark.title.toLowerCase().includes(searchLower) ||
+        bookmark.url.toLowerCase().includes(searchLower) ||
+        bookmark.category.toLowerCase().includes(searchLower) ||
+        (bookmark.description &&
+          bookmark.description.toLowerCase().includes(searchLower));
 
       const matchesNavigation =
         activeNav === "Favorit"
@@ -76,7 +109,21 @@ export function useBookmarks() {
 
       return matchesSearch && matchesNavigation && matchesCategory;
     });
-  }, [bookmarks, search, activeNav, activeCategory, archivedIds]);
+
+    return filtered.sort((a, b) => {
+      if (sortBy === "terlama") {
+        return a.id - b.id;
+      }
+      if (sortBy === "a-z") {
+        return a.title.localeCompare(b.title);
+      }
+      if (sortBy === "z-a") {
+        return b.title.localeCompare(a.title);
+      }
+      // default: terbaru (id descending)
+      return b.id - a.id;
+    });
+  }, [bookmarks, search, activeNav, activeCategory, archivedIds, sortBy]);
 
   async function toggleFavorite(id: number) {
     const bookmark = bookmarks.find((item) => item.id === id);
@@ -164,6 +211,7 @@ export function useBookmarks() {
         url: updatedData.url,
         category: updatedData.category,
         description: updatedData.description,
+        icon: updatedData.icon,
       }),
     });
 
@@ -271,6 +319,7 @@ export function useBookmarks() {
   }
 
   return {
+    isLoading,
     bookmarks,
     setBookmarks,
     search,
@@ -279,6 +328,9 @@ export function useBookmarks() {
     setActiveNav,
     activeCategory,
     setActiveCategory,
+    allCategories,
+    sortBy,
+    setSortBy,
     archivedIds,
     setArchivedIds,
     visibleBookmarks,
@@ -287,5 +339,6 @@ export function useBookmarks() {
     updateBookmark,
     toggleArchive,
     deleteBookmark,
+    refresh: loadBookmarks,
   };
 }
